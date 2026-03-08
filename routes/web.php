@@ -35,3 +35,4 @@ Route::get('/admin/users/create', [UserController::class, 'create'])->name('admi
 Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
 // Ruta para ver el detalle de un reporte y asignar trabajadores
 Route::get('/admin/reportes/{id}', [App\Http\Controllers\ReportesController::class, 'show'])->name('admin.reportes.show');
+Route::patch('/admin/reportes/{id}/finalizar', [ReportesController::class, 'finalizar'])->name('admin.reportes.finalizar');
