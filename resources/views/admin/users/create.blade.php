@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Registro de Expediente de Personal - CFE') }}
+            {{ __('Registro de empleado de Personal - CFE') }}
         </h2>
     </x-slot>
 
@@ -95,6 +95,5 @@
     <script>
         const pass = document.getElementById('password');
         const conf = document.getElementById('password_confirmation');
-        pass.addEventListener('input', () => conf.value = pass.value);
     </script>
 </x-app-layout>

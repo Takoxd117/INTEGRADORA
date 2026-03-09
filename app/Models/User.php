@@ -2,32 +2,34 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * Los atributos que se pueden asignar masivamente.
      */
     protected $fillable = [
         'name',
         'email',
-        'telefono1',
         'password',
+        'role',          // ¡Importante para que no sea siempre ciudadano!
+        'curp',
+        'calle',
+        'numero',
+        'colonia',
+        'municipio',
+        'telefono1',
+        'telefono2',
+        'fecha_ingreso',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Atributos ocultos para la serialización.
      */
     protected $hidden = [
         'password',
@@ -35,9 +37,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * Casteo de atributos.
      */
     protected function casts(): array
     {

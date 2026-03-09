@@ -14,7 +14,7 @@
                     </x-nav-link>
 
                     @if(auth()->user()?->role === 'admin')
-                        <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                        <x-nav-link :href="route('admin.reportes.index')" :active="request()->routeIs('admin.reportes.*')">
                             {{ __('Gestión de Reportes') }}
                         </x-nav-link>
 
@@ -24,7 +24,7 @@
                     @endif
 
                     @if(auth()->user()?->role === 'empleado')
-                        <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">
+                        <x-nav-link :href="route('admin.reportes.index')" :active="request()->routeIs('admin.reportes.index')">
                             {{ __('Mis Tareas Asignadas') }}
                         </x-nav-link>
                     @endif
@@ -79,7 +79,7 @@
             </x-responsive-nav-link>
 
             @if(auth()->user()?->role === 'admin')
-                <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                <x-responsive-nav-link :href="route('admin.reportes.index')" :active="request()->routeIs('admin.reportes.*')">
                     {{ __('Gestión de Reportes') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">

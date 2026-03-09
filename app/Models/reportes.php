@@ -10,9 +10,18 @@ class reportes extends Model // Asegúrate de que este nombre sea igual al del c
     protected $table = 'reportes'; 
 
     protected $fillable = [
-        'nombre_report', 'telefono', 'correo', 'calle', 'numero', 
-        'colonia', 'referencia', 'tipo', 'numero_servicio', 
-        'latitude', 'longitude', 'status'
+        'nombre_report', 
+        'telefono', 
+        'correo', 
+        'calle', 
+        'numero', 
+        'colonia', 
+        'referencia', 
+        'tipo', 
+        'numero_servicio', 
+        'latitude', 
+        'longitude', 
+        'status'
     ];
 
     public function workers()
