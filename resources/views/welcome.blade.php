@@ -1,116 +1,114 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ config('app.name', 'Reportes-CFE') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CFE - Sistema de Reportes Zamora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bg-cfe { background-color: #00723F; }
+        .text-cfe { color: #00723F; }
+        .border-cfe { border-color: #00723F; }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased text-gray-900">
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        <style>
-            /* Botón Verde Sólido */
-            .btn-cfe-primary {
-                background-color: #00723F !important;
-                color: white !important;
-                transition: all 0.3s ease;
-            }
-            .btn-cfe-primary:hover {
-                background-color: #00a35a !important; /* Verde más claro */
-                transform: translateY(-1px);
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            }
-
-            /* Botón con Borde (Outline) */
-            .btn-cfe-outline {
-                border: 2px solid #00723F !important;
-                color: #00723F !important;
-                background-color: transparent;
-                transition: all 0.3s ease;
-            }
-            .btn-cfe-outline:hover {
-                background-color: #00723F !important;
-                color: white !important;
-            }
-
-            .card-shadow {
-                box-shadow: 0 10px 25px -5px rgba(0, 114, 63, 0.1);
-            }
-        </style>
-    </head>
-    <body class="bg-[#f8f9fa] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6">
-            
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
+    <nav class="bg-white shadow-sm border-b-4 border-cfe py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+            <img src="{{ asset('images/logo.svg') }}" alt="CFE Logo" class="h-10 mx-auto mb-4">
+        </div>
+            <div class="hidden sm:flex items-center gap-4">
+                @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="inline-block px-5 py-2 rounded-md text-sm font-bold btn-cfe-primary">
-                            Dashboard
-                        </a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-cfe uppercase">Panel de Control</a>
                     @else
-                    <h1 class="text-3xl font-black text-gray-900 tracking-tight">
-                        Sistema de Reportes <span style="color: #00723F;">CFE Zamora</span>
-                    </h1>
-                        <a href="{{ route('login') }}" class="inline-block px-5 py-2 font-bold rounded-md text-sm btn-cfe-outline">
-                            Iniciar Sesión
-                        </a>
-
+                        <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-cfe uppercase transition">Entrar</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="inline-block px-5 py-2 rounded-md text-sm font-bold btn-cfe-primary">
-                                Registrarse
-                            </a>
+                            <a href="{{ route('register') }}" class="bg-cfe text-white px-5 py-2 rounded-full text-sm font-bold shadow-md hover:bg-green-700 transition">Registrarse</a>
                         @endif
                     @endauth
-                </nav>
-            @endif
-        </header>
+                @endif
+            </div>
+        </div>
+    </nav>
 
-        <main class="w-full lg:max-w-4xl bg-white card-shadow rounded-2xl overflow-hidden border border-gray-100">
-            <div class="p-8 lg:p-12">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="bg-[#00723F] p-3 rounded-lg text-white shadow-lg">
-                        
-                    </div>
+    <main>
+        <div class="relative bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto py-16 px-6 lg:py-24 flex flex-col lg:flex-row items-center gap-12">
+                
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <h1 class="text-4xl sm:text-6xl font-black leading-none text-gray-900 mb-6">
+                        Gestión Eficiente de <br>
+                        <span class="text-cfe">Fallas Eléctricas</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
+                        Plataforma oficial para ciudadanos y personal técnico del municipio de 
+                        <span class="font-bold text-gray-800">Gutierrez Zamora, Veracruz</span>. 
+                        Reporta las fallas con un solo clic.
+                    </p>
                     
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="{{ route('register') }}" class="bg-cfe text-white px-8 py-4 rounded-xl font-black uppercase text-sm shadow-xl hover:bg-green-700 transition transform hover:-translate-y-1 text-center">
+                            Realizar un reporte
+                        </a>
+                        <a href="{{ route('login') }}" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-black uppercase text-sm hover:bg-gray-50 transition text-center sm:hidden">
+                            Iniciar Sesión
+                        </a>
+                    </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                            Bienvenido a la plataforma de gestión de fallas eléctricas del municipio de <strong>Gutierrez Zamora</strong>. Un canal eficiente para ciudadanos y personal técnico.
-                        </p>
+                <div class="lg:w-1/2 w-full">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-green-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-700"></div>
                         
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors">
-                                <span class="bg-[#00723F] text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">1</span>
-                                <span class="text-gray-700 font-medium text-sm">Reporta fallas.</span>
+                        <div class="relative bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-cfe" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Mejorando Gutiérrez Zamora</p>
+                                    <p class="text-xl font-bold text-gray-800 tracking-tight">Reportes en Tiempo Real</p>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors">
-                                <span class="bg-[#00723F] text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">3</span>
-                                <span class="text-gray-700 font-medium text-sm">Soluciones rápidas.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="relative group">
-                        <div class="absolute -inset-1 bg-[#00723F] rounded-xl blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
-                        <div class="relative bg-white p-8 rounded-xl border border-gray-100 shadow-sm text-center">
-                            <img src="{{ asset('images/logo.svg') }}" 
-                                 alt="CFE Logo" class="h-20 mx-auto mb-4">
-                            <h4 class="font-bold text-gray-800 tracking-wide uppercase text-xs">Gutierrez Zamora</h4>
-                            <p class="text-[10px] text-gray-400 mt-2 italic text-center uppercase">Gutierrez Zamora, Veracruz, México</p>
+                            <p class="text-sm text-gray-500 italic mb-4">"Optimizando la infraestructura eléctrica."</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
 
-        <footer class="mt-8 text-gray-400 text-[11px] uppercase tracking-widest font-bold">
-            © {{ date('Y') }} Comisión Federal de Electricidad
-        </footer>
+        <div class="bg-gray-50 py-16 px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="text-cfe text-3xl mb-4"></div>
+                    <h3 class="font-black text-gray-800 uppercase text-sm mb-2">Geolocalización</h3>
+                    <p class="text-sm text-gray-500">Ubicación exacta de las fallas para una atencion precisa.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="text-cfe text-3xl mb-4"></div>
+                    <h3 class="font-black text-gray-800 uppercase text-sm mb-2">Soluciones precisas</h3>
+                    <p class="text-sm text-gray-500">Nuestros técnicos se encargaran de solucionar las fallas.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="text-cfe text-3xl mb-4"></div>
+                    <h3 class="font-black text-gray-800 uppercase text-sm mb-2">Seguimiento</h3>
+                    <p class="text-sm text-gray-500">Monitoreo constante de los reportes de la ciudadania.</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    </body>
+    <footer class="bg-white py-10 px-6 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs">
+            <p>© 2026 COMISIÓN FEDERAL DE ELECTRICIDAD - GUTIÉRREZ ZAMORA</p>
+        </div>
+    </footer>
+
+</body>
 </html>

@@ -64,7 +64,7 @@
 
                 <div class="mt-8">
                     <a href="{{ route('admin.users.index') }}" class="text-gray-500 hover:text-gray-800 font-bold underline">
-                        ← Regresar a la lista de personal
+                        Regresar a la lista de personal
                     </a>
                 </div>
 

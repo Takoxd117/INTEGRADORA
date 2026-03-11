@@ -44,7 +44,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
     
 });
-// GRUPO DE USUARIOS (Solo admin)
+
+// EL DASHBOARD SOLO LLEVA 'auth' Y 'verified'
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+// LAS RUTAS DE ADMINISTRADOR LLEVAN 'auth' Y 'admin'
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 });
