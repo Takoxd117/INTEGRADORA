@@ -42,7 +42,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
-
+    
+});
+// GRUPO DE USUARIOS (Solo admin)
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', UserController::class);
 });
 
 require __DIR__.'/auth.php';

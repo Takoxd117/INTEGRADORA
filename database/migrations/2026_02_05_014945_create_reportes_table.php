@@ -35,7 +35,7 @@ return new class extends Migration
         $table->dateTime('fecha_reporte')->useCurrent();
         
         // Estado
-        $table->enum('status', ['Sin revisar', 'En revisión', 'Revisado'])->default('Sin revisar');
+        $table->enum('status', ['Sin revisar', 'Por revisar', 'Revisado'])->default('Sin revisar');
         $table->timestamps();
     });
 }

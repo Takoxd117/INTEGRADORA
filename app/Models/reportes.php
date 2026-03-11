@@ -21,7 +21,8 @@ class reportes extends Model // Asegúrate de que este nombre sea igual al del c
         'numero_servicio', 
         'latitude', 
         'longitude', 
-        'status'
+        'status',
+        'imagen'
     ];
 
     public function workers()

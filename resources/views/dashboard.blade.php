@@ -20,7 +20,7 @@
 
                 @elseif(auth()->user()->role == 'empleado')
                     <div class="text-center">
-                        <h3 class="text-2xl font-bold text-green-700">Panel de Cuadrilla</h3>
+                        <h3 class="text-2xl font-bold text-green-700">Panel de Reportes</h3>
                         <p class="mt-2">Tienes tareas de mantenimiento asignadas para hoy.</p>
                         <div class="mt-6">
                             <a href="{{ route('admin.reportes.index') }}" class="bg-green-600 text-white px-6 py-2 rounded shadow">Ver Mis Tareas</a>

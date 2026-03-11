@@ -2,69 +2,86 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    // Listar todos los empleados/admins
+    // Listar todos los empleados y administradores
     public function index()
     {
-        // Asegúrate de usar "User" (el nombre de tu modelo), no "Model"
+        // Traemos a los usuarios que no son ciudadanos (personal operativo)
         $users = User::whereIn('role', ['admin', 'empleado'])->get();
         
         return view('admin.users.index', compact('users'));
     }
 
-    // Mostrar formulario de creación
+    // Mostrar formulario de creación de personal
     public function create()
     {
         return view('admin.users.create');
     }
 
-    // Guardar el nuevo trabajador
+    // Guardar el nuevo trabajador en la BD
     public function store(Request $request)
-{
-    // 1. Quitamos 'fecha_ingreso' de aquí porque la generamos abajo automáticamente
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email:rfc,dns|max:255|unique:users',
-        'password' => 'required|min:8|confirmed',
-        'curp' => 'required|string|size:18|unique:users',
-        'role' => 'required',
-        'telefono1' => 'required',
-        // 'fecha_ingreso' ya no debe estar aquí
-    ]);
+    {
+        $request->validate([
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|string|email:rfc,dns|max:255|unique:users',
+            'password'  => 'required|min:8|confirmed',
+            'curp'      => 'required|string|size:18|unique:users',
+            'role'      => 'required|in:admin,empleado',
+            'telefono1' => 'required|string|max:15',
+        ]);
 
-    // 2. Creamos el usuario
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email, // Verifica si es 'email' o 'correo' en tu DB (usualmente es email)
-        'password' => Hash::make($request->password),
-        'role' => $request->role,
-        'curp' => $request->curp,
-        'calle' => $request->calle,
-        'numero' => $request->numero,
-        'colonia' => $request->colonia,
-        'municipio' => $request->municipio ?? 'Zamora', // Valor por defecto si viene vacío
-        'telefono1' => $request->telefono1,
-        'telefono2' => $request->telefono2,
-        'fecha_ingreso' => now()->toDateString(), // Se llena solo
-    ]);
+        User::create([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password),
+            'role'          => $request->role,
+            'CURP'          => strtoupper($request->curp), // Lo guardamos en mayúsculas
+            'calle'         => $request->calle,
+            'numero'        => $request->numero,
+            'colonia'       => $request->colonia,
+            'municipio'     => $request->municipio ?? 'Gutiérrez Zamora',
+            'telefono1'     => $request->telefono1,
+            'telefono2'     => $request->telefono2,
+            'fecha_ingreso' => now()->toDateString(), // Asignación automática
+        ]);
 
-    return redirect()->route('admin.users.index')->with('success', 'Personal registrado con éxito.');
-}
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Personal registrado correctamente en el sistema.');
+    }
+
+    /**
+     * Muestra la información detallada de un empleado específico.
+     */
     public function show($id)
-{
-    // Buscamos el reporte o lanzamos error 404 si no existe
-    $reporte = \App\Models\reportes::findOrFail($id);
-    
-    // Aquí también podrías obtener a los usuarios con rol 'trabajador' para asignarlos
-    $trabajadores = \App\Models\User::all(); // O filtrar por rol si tienes esa lógica
+    {
+        // Buscamos al usuario por ID
+        $user = User::findOrFail($id);
+        
+        // Retornamos la vista de perfil del usuario
+        return view('admin.users.show', compact('user'));
+    }
 
-    return view('admin.reportes.show', compact('reporte', 'trabajadores'));
-}
-    
+    /**
+     * Elimina (Da de baja) a un usuario del sistema.
+     */
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Seguridad: Evitar que el admin se borre a sí mismo
+        if (auth()->id() == $user->id) {
+            return redirect()->back()->with('error', 'No puedes darte de baja a ti mismo.');
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'El usuario ha sido dado de baja exitosamente.');
+    }
 }
